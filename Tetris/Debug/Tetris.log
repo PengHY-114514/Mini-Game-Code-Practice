@@ -1,0 +1,3 @@
+﻿  Source.cpp
+g:\c++learn\code-it-youself\tetris\source.cpp(112): warning C4018: “<”: 有符号/无符号不匹配
+  Tetris.vcxproj -> G:\C++Learn\Code-it-youself\Debug\Tetris.exe
