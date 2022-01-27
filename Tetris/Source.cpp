@@ -1,13 +1,12 @@
-﻿#include <iostream>
+#include <iostream>
 #include <windows.h>
 #include <thread>
 #include <list> 
-
 using namespace std;
 
 
 
-
+SYSTEMTIME st;
 
 wstring tetromino[7];
 const int tetrominoWidth = 4;
@@ -28,9 +27,9 @@ HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NUL
 DWORD dwBytesWritten = 0;
 
 
-int nCurrentPiece = 5;
+int nCurrentPiece = rand()%7;
 int nCurrentRotation = 0;
-int nCurrentX = nFieldWidth / 2;
+int nCurrentX = nFieldWidth / 2-2;
 int nCurrentY = 0;
 
 string intro[4] = { "UP - Rotate",
@@ -208,7 +207,10 @@ int main()
 	
 	
 	
+	GetLocalTime(&st);
 
+
+	nCurrentPiece = int(st.wSecond) % 7;
 
 
 	
@@ -216,23 +218,17 @@ int main()
 	//SMALL_RECT wrt = { 0, 0, short(nScreenWidth - 1), short(nScreenHeight - 1) };
 	SetConsoleActiveScreenBuffer(hConsole);
 
+	
 
 
-	SMALL_RECT wrt = { 0, 0, nScreenWidth-1, nScreenHeight-1 };
+	SMALL_RECT wrt = { 1, 1, nScreenWidth, nScreenHeight };
 	SetConsoleWindowInfo(hConsole, TRUE, &wrt);
 
-
-	COORD coord = { nScreenWidth-1, nScreenHeight-1 };
+	
+	COORD coord = { nScreenWidth, nScreenHeight };
 	SetConsoleScreenBufferSize(hConsole, coord); // 设置缓冲尺寸
 
-
-
-	 wrt = { 0, 0, nScreenWidth - 1, nScreenHeight - 1 };
-	SetConsoleWindowInfo(GetConsoleWindow(), TRUE, &wrt);
-
-
-	 coord = { nScreenWidth - 1, nScreenHeight - 1 };
-	SetConsoleScreenBufferSize(GetConsoleWindow(), coord); // 设置缓冲尺寸
+	
 
 
 	
@@ -387,11 +383,17 @@ int main()
 					}
 				}
 
-				nCurrentX = nFieldWidth / 2;
+				nCurrentX = nFieldWidth / 2-2;
 				nCurrentY = 0;
 				nCurrentRotation = 0;
-				nCurrentPiece = rand() % 7;
 
+				
+				GetLocalTime(&st);
+
+				 
+				nCurrentPiece = int(st.wSecond) % 7;
+				
+					
 				while (!vLine.empty())
 				{
 
